@@ -22,7 +22,7 @@ module Groups
   private def self.from_ptr(group : Pointer(LibC::Group)) : Group
     members = [] of String
     iterator = group.value.gr_mem
-    until iterator.value.null?
+    while iterator.value
       members << String.new(iterator.value)
       iterator += 1
     end
@@ -49,7 +49,7 @@ module Groups
 
   def self.get(name : String)
     group = LibC.getgrnam(name)
-    if group.null?
+    unless group
       raise GroupNotFoundError.new("Group with name #{name} not found")
     end
 
@@ -58,7 +58,7 @@ module Groups
 
   def self.get(gid : UInt32)
     group = LibC.getgrgid(gid)
-    if group.null?
+    unless group
       raise GroupNotFoundError.new("Group with gid #{gid} not found")
     end
 
