@@ -20,7 +20,8 @@ lib LibC
 end
 
 module Users
-  alias User = {name: String, passwd: String, uid: UInt32, gid: UInt32, gecos: String, dir: String, shell: String}
+  alias User = {name: String, passwd: String, uid: UInt32, gid: UInt32, gecos: String,
+                dir: String, shell: String}
 
   class UserNotFoundError < Exception
   end
@@ -41,9 +42,7 @@ module Users
     users = [] of User
 
     LibC.setpwent
-    loop do
-      user = LibC.getpwent
-      break if user.null?
+    while user = LibC.getpwent
       users << from_ptr(user)
     end
     LibC.endpwent

@@ -39,9 +39,7 @@ module Groups
     groups = [] of Group
 
     LibC.setgrent
-    loop do
-      group = LibC.getgrent
-      break if group.null?
+    while group = LibC.getgrent
       groups << from_ptr(group)
     end
     LibC.endgrent
