@@ -3,6 +3,7 @@
 The Unixium library provides the following useful functions for Unix systems:
 
 * Access to a Unix-based system's user, shadow and group databases
+* Obtain the Terminal size in rows and columns
 * Lots more to come!
 
 **Note**: This library is still being developed and will likely undergo various major changes over the coming months until we reach a stable release.  Please use as a reference only at this point.
@@ -50,6 +51,10 @@ staff = Unixium::Groups.get("staff")
 staff = Unixium::Groups.get(20)
 
 # TODO: Add instructions on shadow usage when it's implemented
+
+# Obtain the Terminal size
+termsize = Unixium::Terminal.size
+puts "Your terminal has #{termsize.rows} rows and #{termsize.columns} columns"
 ```
 
 ## Development
