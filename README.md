@@ -24,13 +24,13 @@ require "unixium"
 
 # Obtain all users on the system
 Unixium::Users.all.each do |user|
-  puts "Username: #{user[:name]}"
-  puts "Password: #{user[:passwd]}"
-  puts "UID: #{user[:uid]}"
-  puts "GID: #{user[:gid]}"
-  puts "GECOS: #{user[:gecos]}"
-  puts "Home Directory: #{user[:dir]}"
-  puts "Shell: #{user[:shell]}"
+  puts "Username: #{user.name}"
+  puts "Password: #{user.passwd}"
+  puts "UID: #{user.uid}"
+  puts "GID: #{user.gid}"
+  puts "GECOS: #{user.gecos}"
+  puts "Home Directory: #{user.dir}"
+  puts "Shell: #{user.shell}"
 end
 
 # Obtain an individual user by their username or uid
@@ -39,10 +39,10 @@ fots = Unixium::Users.get(501)
 
 # Obtain all groups on the system
 Unixium::Groups.all.each do |group|
-  puts "Name: #{group[:name]}"
-  puts "Password: #{group[:passwd]}"
-  puts "GID: #{group[:gid]}"
-  puts "Members: #{group[:members]}"
+  puts "Name: #{group.name}"
+  puts "Password: #{group.passwd}"
+  puts "GID: #{group.gid}"
+  puts "Members: #{group.members}"
 end
 
 # Obtain an group user by their name or gid

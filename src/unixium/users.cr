@@ -20,8 +20,8 @@ lib LibC
 end
 
 module Unixium::Users
-  alias User = {name: String, passwd: String, uid: UInt32, gid: UInt32, gecos: String,
-                dir: String, shell: String}
+  record User, name : String, passwd : String, uid : UInt32, gid : UInt32, gecos : String,
+               dir : String, shell : String
 
   class UserNotFoundError < Exception
   end

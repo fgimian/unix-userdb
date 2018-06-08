@@ -14,7 +14,7 @@ lib LibC
 end
 
 module Unixium::Groups
-  alias Group = {name: String, passwd: String, gid: UInt32, members: Array(String)}
+  record Group, name : String, passwd : String, gid : UInt32, members : Array(String)
 
   class GroupNotFoundError < Exception
   end
