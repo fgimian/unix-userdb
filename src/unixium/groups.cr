@@ -13,7 +13,7 @@ lib LibC
   fun endgrent
 end
 
-module Groups
+module Unixium::Groups
   alias Group = {name: String, passwd: String, gid: UInt32, members: Array(String)}
 
   class GroupNotFoundError < Exception

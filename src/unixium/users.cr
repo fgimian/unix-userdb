@@ -19,7 +19,7 @@ lib LibC
   fun endpwent
 end
 
-module Users
+module Unixium::Users
   alias User = {name: String, passwd: String, uid: UInt32, gid: UInt32, gecos: String,
                 dir: String, shell: String}
 
