@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe UnixUserdb do
+describe Unixium do
   # TODO: Write tests
 
   it "works" do

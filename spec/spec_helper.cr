@@ -1,2 +1,2 @@
 require "spec"
-require "../src/unix_userdb"
+require "../src/unixium"

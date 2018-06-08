@@ -1,3 +1,3 @@
-module UnixUserdb
+module Unixium
   VERSION = "0.1.0"
 end
