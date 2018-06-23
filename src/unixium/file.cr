@@ -29,9 +29,7 @@ module Unixium::File
     end
 
     # A symlink can never be a mount point
-    if (stat_path.st_mode & LibC::S_IFMT) == LibC::S_IFLNK
-      return false
-    end
+    return false if stat_path.st_mode & LibC::S_IFMT == LibC::S_IFLNK
 
     parent = File.real_path(File.join(path, ".."))
     begin
@@ -41,34 +39,26 @@ module Unixium::File
     end
 
     # Parent path on a different device to path
-    if stat_path.st_dev != stat_parent.st_dev
-      return true
-    end
+    return true if stat_path.st_dev != stat_parent.st_dev
 
     # Parent path is the same i-node as path
-    if stat_path.st_ino == stat_parent.st_ino
-      return true
-    end
+    return true if stat_path.st_ino == stat_parent.st_ino
 
-    return false
+    false
   end
 
   # Given a list of path names, returns the longest common leading component
   def self.common_prefix(paths : Array(Array(String))) : Array(String)
-    if paths.empty?
-      return [] of String
-    end
+    return [] of String if paths.empty?
 
     path_min = paths.min
     path_max = paths.max
 
     path_min.each_with_index do |path, index|
-      if path != path_max[index]
-        return path_min[0, index]
-      end
+      return path_min[0, index] unless path == path_max[index]
     end
 
-    return path_min
+    path_min
   end
 
   # Return a relative version of a path
@@ -79,14 +69,10 @@ module Unixium::File
     start = current_dir unless start
 
     # Ensure both paths are absolute
-    unless path.starts_with?(File::SEPARATOR)
-      path = File.join(Dir.current, path)
-    end
+    path = File.join(Dir.current, path) unless path.starts_with?(File::SEPARATOR)
     path = File.expand_path(path)
 
-    unless start.starts_with?(File::SEPARATOR)
-      start = File.join(Dir.current, start)
-    end
+    start = File.join(Dir.current, start) unless start.starts_with?(File::SEPARATOR)
     start = File.expand_path(start)
 
     # Break up paths into their parts (ensuring no empty parts)
@@ -97,10 +83,8 @@ module Unixium::File
     index = common_prefix([start_parts, path_parts]).size
     relative_parts = [parent_dir] * (start_parts.size - index) + path_parts[index..-1]
 
-    if relative_parts.empty?
-      return current_dir
-    end
+    return current_dir if relative_parts.empty?
 
-    return File.join(relative_parts)
+    File.join(relative_parts)
   end
 end
