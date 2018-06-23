@@ -18,7 +18,9 @@ module Unixium::Terminal
 
   def self.size
     winsize = LibC::WinSize.new
-    result = LibC.ioctl(LibC::STDOUT_FILENO, LibC::TIOCGWINSZ, pointerof(winsize).as(Void*))
-    return TerminalSize.new(rows: winsize.ws_row, columns: winsize.ws_col)
+    if LibC.ioctl(LibC::STDOUT_FILENO, LibC::TIOCGWINSZ, pointerof(winsize).as(Void*)) == 0
+      return TerminalSize.new(rows: winsize.ws_row, columns: winsize.ws_col)
+    end
+    raise Errno.new("Error obtaining terminal size")
   end
 end
